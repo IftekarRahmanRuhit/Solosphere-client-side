@@ -8,16 +8,35 @@ const MyBids = () => {
   const { user } = useContext(AuthContext);
   const [bids, setBids] = useState([]);
   useEffect(() => {
-    fetchAllJobs();
+    fetchAllBids();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const fetchAllJobs = async () => {
+  const fetchAllBids = async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/bids/${user?.email}`
     );
     setBids(data);
   };
+
+  const handleStatusChange = async (id, prevStatus, status) => {
+    if (prevStatus !== 'In Progress') return console.log('Not Allowed')
+
+    try {
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/bid-status-update/${id}`, {
+        status, })
+      console.log(data)
+
+      // refresh ui
+      fetchAllBids()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
+
 
   return (
     <section className='container px-4 mx-auto my-12'>
@@ -83,7 +102,7 @@ const MyBids = () => {
                 <tbody className='bg-white divide-y divide-gray-200 '>
                 {bids.map(bid => (
                     <BidTableRow
-                      
+                    handleStatusChange={handleStatusChange}
                       key={bid._id}
                       bid={bid}
                     />
