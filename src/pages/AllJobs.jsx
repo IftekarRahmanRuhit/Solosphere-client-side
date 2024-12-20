@@ -40,6 +40,7 @@ const AllJobs = () => {
               id="category"
               className="border p-4 rounded-lg"
               onChange={(e) => setFilter(e.target.value)}
+              value={filter}
             >
               <option value="">Filter By Category</option>
               <option value="Web Development">Web Development</option>
@@ -55,6 +56,7 @@ const AllJobs = () => {
                 type="text"
                 name="search"
                 onChange={(e) => setSearch(e.target.value)}
+                value={search}
                 placeholder="Enter Job Title"
                 aria-label="Enter Job Title"
               />
@@ -69,6 +71,7 @@ const AllJobs = () => {
               name="category"
               id="category"
               onChange={e => setSort(e.target.value)}
+              value={sort}
               className="border p-4 rounded-md"
             >
               <option value="">Sort By Deadline</option>
